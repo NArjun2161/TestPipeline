@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        M2_HOME = '/usr/share/maven' // Optional, if needed for reference
+        M2_HOME = '/usr/share/maven' // Optional
     }
 
     stages {
@@ -58,6 +58,16 @@ pipeline {
             }
         }
 
+        stage('Deploy (Local Run)') {
+            steps {
+                sh '''
+                    pkill -f makemytrip-1.0.jar || true
+                    nohup java -jar target/makemytrip-1.0.jar > app.log 2>&1 &
+                    echo "App is deployed and running locally."
+                '''
+            }
+        }
+
         stage('Complete Pipeline') {
             steps {
                 echo '✅ Arjun Pipeline executed successfully!'
@@ -67,10 +77,10 @@ pipeline {
 
     post {
         success {
-            echo 'Pipeline completed successfully.'
+            echo '🎉 Pipeline completed successfully.'
         }
         failure {
-            echo 'Pipeline failed. Please check the logs.'
+            echo '❌ Pipeline failed. Please check the logs.'
         }
     }
 }
