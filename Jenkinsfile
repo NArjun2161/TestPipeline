@@ -11,6 +11,11 @@ pipeline {
                 '''
             }
         }
+        stage('print all env vars') {
+    steps {
+        sh 'printenv'
+    }
+}
         stage('checking mvn HOME_PATH') {
             steps {
                 sh ''' 
