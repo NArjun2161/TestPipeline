@@ -11,5 +11,12 @@ pipeline {
                 '''
             }
         }
+        stage('checking mvn HOME_PATH') {
+            steps {
+                sh ''' 
+                    echo $M2_HOME
+                '''
+            }
+        }
     }
 }
